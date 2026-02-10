@@ -1,0 +1,121 @@
+#================================================================================
+# CONFIGURATION FILES
+# FILE: framework_config.yaml
+# Purpose:
+# Main configuration of the framework 
+# i.e DUT IP, ports, protocol.
+
+# Author: Diksha Ravindran
+# Year: Jan - 2025
+#================================================================================
+
+
+# Framework Configuration
+# YAML configuration for test execution
+
+# Network Configuration
+# Here add all network related configs. As of now, simple NIC configs added.
+
+network:
+  # Network interface to use (run 'python cli.py interfaces' to list)
+  interface: "eth0"
+  
+  # Communication protocol
+  protocol: "tcp"  # Options: tcp, udp
+  protocol: "udp"
+  # DUT connection details
+  dut:
+    ip: "192.168.1.100"
+    port: 5000
+    
+    # CLI/Telnet connection (optional)
+    cli_port: 23  # Telnet port
+    cli_prompt: "DUT>"  # Expected CLI prompt
+    cli_username: "admin"  # Leave empty if no auth required
+    cli_password: "admin"  
+    
+  # Timeout settings (milliseconds)
+  timeout: 1000
+  
+  # Retry configuration
+  retry_count: 3
+
+# Test Execution Settings
+execution:
+  # Default execution mode
+  mode: "sequential"  # Options: sequential, parallel_threads, parallel_processes
+  mode: "parallel_threads"  # running the ATS in parallel.
+
+  # Number of parallel workers (if parallel mode)
+  workers: 4
+  
+  # Stop on first failure
+  stop_on_failure: false
+  
+  # Test discovery - where our automated test cases are stored.
+  test_directory: "tests"
+  test_pattern: "test_*.py"
+
+# Logging Configuration
+logging:
+  # Log level
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  
+  # Log directory
+  log_dir: "logs"
+  
+  # Console output
+  console_output: true
+
+# Reporting Configuration
+reporting:
+  # Output directory
+  output_dir: "reports"
+  
+  # Report formats to generate
+  formats:
+    - "html"
+    - "json"
+    - "console"
+  
+  # Include detailed metrics
+  detailed_metrics: true
+
+# Performance Settings
+performance:
+  use_cpp_comms: true
+  
+  # Packet buffer size
+  buffer_size: 4096
+  
+  # Burst mode settings
+  burst:
+    enabled: false
+    batch_size: 100
+
+# Test Tags
+# Define test suites by tags
+test_suites:
+  smoke:
+    - "smoke"
+    - "basic"
+    - "tcp"
+    - "cli"
+  
+  regression:
+    - "regression"
+    - "protocol"
+    - "data"
+    - "sequence"
+  
+  performance:
+    - "performance"
+    - "stress"
+    - "latency"
+    - "throughput"
+  
+  all:
+    - "smoke"
+    - "regression"
+    - "performance"
+

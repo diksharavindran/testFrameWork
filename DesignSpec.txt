@@ -1,0 +1,127 @@
+Author: Diksha Ravindran
+Date: Jan-2026
+
+Overview:
+Modular Python & C++ test framework designed for automated testing of embedded devices over network interfaces (NIC). The framework provides high-performance communication, parallel test execution, comprehensive reporting, and easy test authoring.
+
+Architecture:
+Three-Layer Design
+┌─────────────────────────────────────────┐
+│     Application Layer (Python)          │
+│  - CLI Interface                        │
+│  - Test Discovery & Management          │
+│  - Report Generation                    │
+├─────────────────────────────────────────┤
+│     Core Framework (Python)             │
+│  - Test Base Classes                    │
+│  - Scheduler (Sequential/Parallel)      │
+│  - Assertion Library                    │
+│  - Logging & Metrics                    |
+├─────────────────────────────────────────┤
+│  Communication Layer (Python + C++)      │
+│  - NIC Interface Abstraction             │
+│  - Protocol Handlers (TCP/UDP/Raw)       │
+│  - C++ Fast Path (Performance Critical)  │
+└─────────────────────────────────────────┘
+
+
+
+Project Struture:
+
+embedded_test_framework/
+├── src/
+│   ├── core/                   # Core framework components
+│   │   ├── base_test.py        # Base test class with lifecycle
+│   │   ├── test_manager.py     # Test registration & discovery
+│   │   ├── scheduler.py        # Execution engine
+│   │   └── reporter.py         # Report generation
+│   ├── network/                # Network communication
+│   │   └── nic_interface.py    # NIC abstraction layer
+│   └── cpp/                    # High-performance C++ modules
+│       ├── fast_comms.h        # Communication interface
+│       ├── fast_comms.cpp      # Implementation
+│       └── bindings.cpp        # Python bindings (pybind11)
+├── tests/                      # Test files directory
+│   └── example_tests/
+│       └── test_examples.py    # Example test cases
+├── config/                     # Configuration files
+│   └── framework_config.yaml   # Main configuration
+├── reports/                    # Generated test reports
+├── logs/                       # Test execution logs
+├── cli.py                      # Command-line interface
+├── setup.py                    # Package installation
+├── requirements.txt            # Python dependencies
+├── Makefile                    # Build automation
+├── README.md                   # Main documentation
+└── QUICKSTART.md              # Getting started guide
+
+
+
+Requirements:
+
+Must Include Key Features:
+
+1. Easy Test Authoring
+
+Simple base class with setup/run/teardown lifecycle
+Rich assertion library
+Automatic test discovery with decorators
+Tag-based test
+
+2. Flexible Execution53
+
+Sequential execution (reliable, debuggable)
+Parallel execution with threads (I/O bound tests)
+Parallel execution with processes (CPU bound tests)
+Configurable worker count
+
+3. Comprehensive Reporting
+
+Real-time console output with progress
+Beautiful HTML reports with statistics
+JSON reports for CI/CD integration
+Detailed logging with timestamps
+
+4. High-Performance Communication
+
+Python NIC interface for flexibility
+C++ fast path for performance-critical operations
+Support for TCP, UDP, and raw Ethernet
+Built-in latency measurement and throughput testing
+
+5. DUT Communication
+
+Abstracted NIC interface (works with any network adapter)
+Protocol-agnostic design
+Automatic retry and timeout handling
+Packet validation and checksums
+As of now,  i planned to validate with raspberry PI.
+
+
+Frame work Config:
+
+The framework is configured via config/framework_config.yaml:
+
+1. network interface shall be configured. 
+2. Protocol type shall be configured.
+3. network params ip, port shall be configured.
+
+Example:
+network:
+  interface: "eth0"
+  protocol: "tcp"
+  dut:
+    ip: "192.168.1.100"
+    port: 5000
+
+4. System params shall be configured. 
+Like how the test cases should run- sequential, parrallel. 
+
+execution:
+  mode: "sequential"
+  workers: 4
+  stop_on_failure: false
+
+
+  Ref: Requrement Document for more Details.
+
