@@ -6,7 +6,7 @@
 # 2. Compiles C++ module and installs Python package
 # 
 # Author: Diksha Ravindran
-# Year: Jan - 2025
+# Year: Jan - 2026
 #================================================================================
 
 from setuptools import setup, Extension, find_packages
